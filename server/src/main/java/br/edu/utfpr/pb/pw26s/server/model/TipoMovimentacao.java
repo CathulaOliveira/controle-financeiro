@@ -1,13 +1,13 @@
 package br.edu.utfpr.pb.pw26s.server.model;
 
-public enum Tipo {
-    CC("Conta corrente"),
-    CP("Conta poupança"),
-    CARTAO("Cartão");
+public enum TipoMovimentacao {
+    RECEITA("Receita"),
+    DESPESA("Despesa"),
+    TRANFERENCIA("Transferência entre contas");
 
     private String descricao;
 
-    Tipo(String descricao) {
+    TipoMovimentacao(String descricao) {
         this.descricao = descricao;
     }
 
