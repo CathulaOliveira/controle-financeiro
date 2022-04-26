@@ -21,7 +21,7 @@ public class MovimentacaoController {
     MovimentacaoService movimentacaoService;
 
     @PostMapping
-    GenericResponse createUser(@Valid @RequestBody Movimentacao movimentacao) {
+    GenericResponse createMovimentacao(@Valid @RequestBody Movimentacao movimentacao) {
         movimentacaoService.save(movimentacao);
         return new GenericResponse("Registro salvo.");
     }

@@ -1,6 +1,10 @@
 import axios from 'axios'
 
 
-export const postSignup = (user) => {
-    return axios.post('/users', user);
+export const postUsuario = (usuario) => {
+    return axios.post('/usuario', usuario);
+} 
+
+export const postConta = (conta) => {
+    return axios.post('/conta', conta);
 } 

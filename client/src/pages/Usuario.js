@@ -1,12 +1,12 @@
 import React from "react";
 import Input from '../components/input';
 
-export class UserSignupPage extends React.Component {
+export class Usuario extends React.Component {
     state = {
         nome: '',
         email: '',
         senha: '',
-        confirmaSenha: '',
+        confirmarSenha: '',
         pendingApiCall: false,
         errors: {},
     }
@@ -25,35 +25,35 @@ export class UserSignupPage extends React.Component {
         const value = event.target.value;
         this.setState({ senha: value });
     }
-    onChangeConfirmaSenha = (event) => {
+    onChangeConfirmarSeha = (event) => {
         const value = event.target.value;
-        this.setState({ confirmaSenha: value });
+        this.setState({ confirmarSenha: value });
     }
 
-    onClickSignup = () => {
-        const usuario = {
-            email: this.state.email,
+    onClickCadastrar = () => {
+        const user = {
             nome: this.state.nome,
+            email: this.state.email,
             senha: this.state.senha,
         }
         this.setState({ pendingApiCall: true });
-        this.props.actions.postSignup(usuario).then(response => {
+        this.props.actions.postUsuario(user)
+        .then(response => {
             this.setState({ pendingApiCall: false });
-        })
-            .catch(apiError => {
-                let errors = { ...this.state.errors }
-                if (apiError.response.data && apiError.response.data.validationErrors) {
-                    errors = { ...apiError.response.data.validationErrors }
-                }
-                this.setState({ pendingApiCall: false, errors });
-            });
+        }).catch(apiError => {
+            let errors = { ...this.state.errors }
+            if (apiError.response.data && apiError.response.data.validationErrors) {
+                errors = { ...apiError.response.data.validationErrors }
+            }
+            this.setState({ pendingApiCall: false, errors });
+        });
 
     }
 
     render() {
         return (
             <div className="container">
-                <h1 className="text-center">Sign Up</h1>
+                <h1 className="text-center">Usuário</h1>
                 <div className="col-12 mb-3">
                     <Input
                         label="Informe o seu nome"
@@ -67,14 +67,14 @@ export class UserSignupPage extends React.Component {
 
                 </div>
                 <div className="col-12 mb-3">
-                    <label>Informe o seu email</label>
+                    <label>Informe o email</label>
                     <input className="form-control"
-                        type="text" placeholder="Informe o seu email"
+                        type="text" placeholder="Informe o email"
                         value={this.state.email}
                         onChange={this.onChangeEmail} />
                 </div>
                 <div className="col-12 mb-3">
-                    <label>Informe o sua senha</label>
+                    <label>Informe a sua senha</label>
                     <input className="form-control"
                         type="password" placeholder="Informe a sua senha"
                         value={this.state.senha}
@@ -84,13 +84,13 @@ export class UserSignupPage extends React.Component {
                     <label>Confirme sua senha</label>
                     <input className="form-control"
                         type="password" placeholder="Confirme sua senha"
-                        value={this.state.confirmaSenha}
-                        onChange={this.onChangeConfirmaSenha} />
+                        value={this.state.confirmarSenha}
+                        onChange={this.onChangeConfirmarSeha} />
                 </div>
                 <div className="text-center">
                     <button className="btn btn-primary"
                         disabled={this.state.pendingApiCall}
-                        onClick={this.onClickSignup}
+                        onClick={this.onClickCadastrar}
                     >
                         {this.state.pendingApiCall && (
                             <div className="spinner-border text-light spinner-border-sm mr-sm-1"
@@ -106,12 +106,12 @@ export class UserSignupPage extends React.Component {
     }
 }
 
-UserSignupPage.defaultProps = {
+Usuario.defaultProps = {
     actions: {
-        postSignup: () =>
+        postUsuario: () =>
             new Promise((resolve, reject) => {
                 resolve({});
             }),
     }
 }
-export default UserSignupPage;
+export default Usuario;

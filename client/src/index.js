@@ -3,16 +3,17 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
-import UserSignupPage from './pages/UserSignupPage';
+import Usuario from './pages/Usuario';
+import Conta from './pages/Conta';
 import * as apiCalls from './api/apiCalls';
 
 const actions = {
-  postSignup: apiCalls.postSignup
+  postConta: apiCalls.postConta
 }
 
 ReactDOM.render(
   <React.StrictMode>
-    <UserSignupPage actions={actions} />
+    <Conta actions={actions} />
   </React.StrictMode>,
   document.getElementById('root')
 );

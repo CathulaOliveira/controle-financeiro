@@ -1,49 +1,49 @@
 import { fireEvent, render, waitForElementToBeRemoved } from "@testing-library/react";
-import UserSignupPage from "./UserSignupPage";
+import Usuario from "./Usuario";
 
-describe('UserSignupPage', () => {
+describe('Usuario', () => {
 
     describe('Layout', () => {
-        it('has header of Sign Up', () => {
-            const { container } = render(<UserSignupPage />);
+        it('título igual a Usuário', () => {
+            const { container } = render(<Usuario />);
             const header = container.querySelector('h1');
-            expect(header).toHaveTextContent('Sign Up');
+            expect(header).toHaveTextContent('Usuário');
         });
 
-        it('has input for name', () => {
-            const { queryByPlaceholderText } = render(<UserSignupPage />);
+        it('input para informar o nome', () => {
+            const { queryByPlaceholderText } = render(<Usuario />);
             const nomeInput = queryByPlaceholderText('Informe o seu nome');
             expect(nomeInput).toBeInTheDocument();
         });
-        it('has input for email', () => {
-            const { queryByPlaceholderText } = render(<UserSignupPage />);
-            const emailInput = queryByPlaceholderText('Informe o seu email');
+        it('input para informar o email', () => {
+            const { queryByPlaceholderText } = render(<Usuario />);
+            const emailInput = queryByPlaceholderText('Informe o email');
             expect(emailInput).toBeInTheDocument();
         });
-        it('has input for password', () => {
-            const { queryByPlaceholderText } = render(<UserSignupPage />);
+        it('input para informar a senha', () => {
+            const { queryByPlaceholderText } = render(<Usuario />);
             const senhaInput = queryByPlaceholderText('Informe a sua senha');
             expect(senhaInput).toBeInTheDocument();
         });
-        it('has senha type for password repeat', () => {
-            const { queryByPlaceholderText } = render(<UserSignupPage />);
+        it('type do input senha igual a password', () => {
+            const { queryByPlaceholderText } = render(<Usuario />);
             const senhaInput = queryByPlaceholderText('Informe a sua senha');
             expect(senhaInput.type).toBe('password');
         });
 
-        it('has input for password repeat', () => {
-            const { queryByPlaceholderText } = render(<UserSignupPage />);
-            const confirmaSenhaInput = queryByPlaceholderText('Confirme sua senha');
-            expect(confirmaSenhaInput).toBeInTheDocument();
+        it('input para informar a confirmação de senha', () => {
+            const { queryByPlaceholderText } = render(<Usuario />);
+            const confirmarSenhaInput = queryByPlaceholderText('Confirme sua senha');
+            expect(confirmarSenhaInput).toBeInTheDocument();
         });
-        it('has senha type for password repeat input', () => {
-            const { queryByPlaceholderText } = render(<UserSignupPage />);
-            const confirmaSenhaInput = queryByPlaceholderText('Confirme sua senha');
-            expect(confirmaSenhaInput.type).toBe('password');
+        it('type do input confirmar senha igual a password', () => {
+            const { queryByPlaceholderText } = render(<Usuario />);
+            const confirmarSenhaInput = queryByPlaceholderText('Confirme sua senha');
+            expect(confirmarSenhaInput.type).toBe('password');
         });
 
-        it('has submit button', () => {
-            const { container } = render(<UserSignupPage />);
+        it('botão submit', () => {
+            const { container } = render(<Usuario />);
             const header = container.querySelector('button');
             expect(header).toBeInTheDocument();
         });
@@ -78,61 +78,61 @@ describe('UserSignupPage', () => {
             });
         }
 
-        let nomeInput, emailInput, senhaInput, confirmaSenhaInput, button;
+        let nomeInput, emailInput, senhaInput, repeatPasswordInput, button;
         const setupForSubmit = (props) => {
-            const rendered = render(<UserSignupPage {...props} />)
+            const rendered = render(<Usuario {...props} />)
 
             const { container, queryByPlaceholderText } = rendered;
 
             nomeInput = queryByPlaceholderText('Informe o seu nome');
-            emailInput = queryByPlaceholderText('Informe o seu email');
+            emailInput = queryByPlaceholderText('Informe o email');
             senhaInput = queryByPlaceholderText('Informe a sua senha');
-            confirmaSenhaInput = queryByPlaceholderText('Confirme sua senha');
+            repeatPasswordInput = queryByPlaceholderText('Confirme sua senha');
 
-            fireEvent.change(nomeInput, changeEvent('nome'));
-            fireEvent.change(emailInput, changeEvent('email'));
-            fireEvent.change(senhaInput, changeEvent('P4ssword'));
-            fireEvent.change(confirmaSenhaInput, changeEvent('P4ssword'));
+            fireEvent.change(nomeInput, changeEvent('teste'));
+            fireEvent.change(emailInput, changeEvent('teste@teste.com'));
+            fireEvent.change(senhaInput, changeEvent('Teste@123'));
+            fireEvent.change(repeatPasswordInput, changeEvent('Teste@123'));
 
             button = container.querySelector('button');
 
             return rendered;
         }
 
-        it('sets the name value into state', () => {
-            const { queryByPlaceholderText } = render(<UserSignupPage />);
+        it('sets the nome value into state', () => {
+            const { queryByPlaceholderText } = render(<Usuario />);
             const nomeInput = queryByPlaceholderText('Informe o seu nome');
-            fireEvent.change(nomeInput, changeEvent('nome'));
-            expect(nomeInput).toHaveValue('nome');
+            fireEvent.change(nomeInput, changeEvent('teste'));
+            expect(nomeInput).toHaveValue('teste');
         });
 
         it('sets the email value into state', () => {
-            const { queryByPlaceholderText } = render(<UserSignupPage />);
-            const emailInput = queryByPlaceholderText('Informe o seu email');
-            fireEvent.change(emailInput, changeEvent('email'));
-            expect(emailInput).toHaveValue('email');
+            const { queryByPlaceholderText } = render(<Usuario />);
+            const emailInput = queryByPlaceholderText('Informe o email');
+            fireEvent.change(emailInput, changeEvent('teste@teste.com'));
+            expect(emailInput).toHaveValue('teste@teste.com');
         });
 
-        it('sets the password value into state', () => {
-            const { queryByPlaceholderText } = render(<UserSignupPage />);
+        it('sets the senha value into state', () => {
+            const { queryByPlaceholderText } = render(<Usuario />);
             const senhaInput = queryByPlaceholderText('Informe a sua senha');
-            fireEvent.change(senhaInput, changeEvent('P4ssword'));
-            expect(senhaInput).toHaveValue('P4ssword');
+            fireEvent.change(senhaInput, changeEvent('Teste@123'));
+            expect(senhaInput).toHaveValue('Teste@123');
         });
-        it('sets the password repeat value into state', () => {
-            const { queryByPlaceholderText } = render(<UserSignupPage />);
-            const confirmaSenhaInput = queryByPlaceholderText('Confirme sua senha');
-            fireEvent.change(confirmaSenhaInput, changeEvent('P4ssword'));
-            expect(confirmaSenhaInput).toHaveValue('P4ssword');
+        it('sets the senha repeat value into state', () => {
+            const { queryByPlaceholderText } = render(<Usuario />);
+            const confirmarSenhaInput = queryByPlaceholderText('Confirme sua senha');
+            fireEvent.change(confirmarSenhaInput, changeEvent('Teste@123'));
+            expect(confirmarSenhaInput).toHaveValue('Teste@123');
         });
 
-        it('calls postSignup when the fields are valid and the actions are provided in props', () => {
+        it('chama postUsuario quando os campos são válidos', () => {
             const actions = {
-                postSignup: jest.fn().mockResolvedValueOnce({}),
+                postUsuario: jest.fn().mockResolvedValueOnce({}),
             }
             setupForSubmit({ actions });
             fireEvent.click(button);
-            expect(actions.postSignup).toHaveBeenCalledTimes(1);
+            expect(actions.postUsuario).toHaveBeenCalledTimes(1);
         });
 
         it('does not throw exception when clicking the button and actions are not provided in props', () => {
@@ -142,32 +142,32 @@ describe('UserSignupPage', () => {
 
         it('calls post with user body when the fields are valid', () => {
             const actions = {
-                postSignup: jest.fn().mockResolvedValueOnce({}),
+                postUsuario: jest.fn().mockResolvedValueOnce({}),
             }
             setupForSubmit({ actions });
             fireEvent.click(button);
 
             const expectedUserObject = {
-                nome: 'nome',
-                email: 'email',
-                senha: 'P4ssword',
+                nome: 'teste',
+                email: 'teste@teste.com',
+                senha: 'Teste@123',
             }
-            expect(actions.postSignup).toHaveBeenCalledWith(expectedUserObject);
+            expect(actions.postUsuario).toHaveBeenCalledWith(expectedUserObject);
         });
 
         it('does not allow user to click the Signup button when there is an outgoing api call', () => {
             const actions = {
-                postSignup: mockAsyncDelayed(),
+                postUsuario: mockAsyncDelayed(),
             }
             setupForSubmit({ actions });
             fireEvent.click(button);
             fireEvent.click(button);
-            expect(actions.postSignup).toHaveBeenCalledTimes(1);
+            expect(actions.postUsuario).toHaveBeenCalledTimes(1);
         });
 
-        it('displays spinner when there is an ongoing api call', () => {
+        it('exibe o spinner quando há uma chamada de API em andamento', () => {
             const actions = {
-                postSignup: mockAsyncDelayed(),
+                postUsuario: mockAsyncDelayed(),
             }
             const { queryByText } = setupForSubmit({ actions });
             fireEvent.click(button);
@@ -176,9 +176,9 @@ describe('UserSignupPage', () => {
             expect(spinner).toBeInTheDocument();
         });
 
-        it('hides spinner after api call finishes successfully', async () => {
+        it('oculta o spinner após a conclusão da chamada da API', async () => {
             const actions = {
-                postSignup: mockAsyncDelayed(),
+                postUsuario: mockAsyncDelayed(),
             }
             const { queryByText } = setupForSubmit({ actions });
             fireEvent.click(button);
@@ -189,9 +189,9 @@ describe('UserSignupPage', () => {
             expect(spinner).not.toBeInTheDocument();
         });
 
-        it('hides spinner after api call finishes with error', async () => {
+        it('oculta o spinner após a chamada da API terminar com erro', async () => {
             const actions = {
-                postSignup: mockAsyncDelayedRejected(),
+                postUsuario: mockAsyncDelayedRejected(),
             }
             const { queryByText } = setupForSubmit({ actions });
             fireEvent.click(button);
@@ -202,9 +202,9 @@ describe('UserSignupPage', () => {
             expect(spinner).not.toBeInTheDocument();
         });
 
-        it('displays validation error for nome when error is received for the field', async () => {
+        it('exibe erro de validação para nome', async () => {
             const actions = {
-                postSignup: jest.fn().mockRejectedValue({
+                postUsuario: jest.fn().mockRejectedValue({
                     response : {
                         data: {
                             validationErrors: {
