@@ -3,17 +3,13 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
-import Usuario from './pages/Usuario';
-import Conta from './pages/Conta';
-import * as apiCalls from './api/apiCalls';
-
-const actions = {
-  postConta: apiCalls.postConta
-}
+import { BrowserRouter } from 'react-router-dom';
 
 ReactDOM.render(
   <React.StrictMode>
-    <Conta actions={actions} />
+    <BrowserRouter>
+      <App />
+    </BrowserRouter>
   </React.StrictMode>,
   document.getElementById('root')
 );
