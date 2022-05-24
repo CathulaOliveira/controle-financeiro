@@ -1,6 +1,6 @@
 package br.edu.utfpr.pb.pw26s.server.model;
 
-import br.edu.utfpr.pb.pw26s.server.enums.Type;
+import br.edu.utfpr.pb.pw26s.server.enums.TypeAccount;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -32,5 +32,9 @@ public class Account {
     private String bank;
 
     @NotNull
-    private Type type;
+    @Enumerated(EnumType.STRING)
+    private TypeAccount type;
+
+    @Column(nullable = false)
+    private Double balance;
 }

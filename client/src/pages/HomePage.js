@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { getCurrentMonth } from '../helpers/DateFilter';
 import TableHome from '../components/TableHome';
+import Dashboard from '../components/Dashboard';
 
 const headerStyle = {
     backgroundColor: '#820ad1',
@@ -15,22 +16,44 @@ const h1Style = {
     paddingTop: 30,
 }
 
-// const [list, setList] = useState([]);
-// const [filteredList, setFilteredList] = useState([]);
-// const [currentMonth, setCurrentMonth] = useState(getCurrentMonth());
-// const [apiError, setApiError] = useState();
-
-// useEffect(() => {
-//     setFilteredList(filterListByMonth(list, currentMonth));
-// }, [list, currentMonth]);
+const filteredList = [
+    {
+    title: "Teste"
+    }
+]
 
 const HomePage = () => {
+    const [list, setList] = useState([]);
+    // const [filteredList, setFilteredList] = useState([]);
+    const [currentMonth, setCurrentMonth] = useState('');
+    const [apiError, setApiError] = useState();
+    const [income, setIncome] = useState(0);
+    const [expense, setExpense] = useState(0);
+
+    useEffect(() => {
+        loadData();
+    }, []);
+
+    const loadData = () => {
+        setCurrentMonth(getCurrentMonth());
+    }
+
+    const handleMonthChange = (newMonth) => {
+        setCurrentMonth(newMonth);
+    }
+    
     return (
         <div>
             <div style={headerStyle}>
                 <h1 style={h1Style}>Controle Financeiro</h1>
             </div>
             <div className='container'>
+                <Dashboard 
+                    currentMonth={currentMonth}
+                    onMonthChange={handleMonthChange}
+                    income={income}
+                    expense={expense}
+                />
                 <TableHome />
             </div>
         </div>

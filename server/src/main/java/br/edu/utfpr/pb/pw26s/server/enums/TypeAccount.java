@@ -1,6 +1,6 @@
 package br.edu.utfpr.pb.pw26s.server.enums;
 
-public enum Type {
+public enum TypeAccount {
 
     CONTA_CORRENTE("Conta Corrente"),
     CONTA_POUPANCA("Conta Poupança"),
@@ -8,7 +8,7 @@ public enum Type {
 
     private String descricao;
 
-    Type(String descricao) {
+    TypeAccount(String descricao) {
         this.descricao = descricao;
     }
 

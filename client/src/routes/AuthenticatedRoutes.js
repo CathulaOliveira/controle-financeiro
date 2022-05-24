@@ -3,8 +3,12 @@ import { Route, Routes } from 'react-router-dom';
 import NavBar from '../components/NavBar';
 import CategoryListPage from '../pages/CategoryListPage';
 import ProductListPage from '../pages/ProductListPage';
+import AccountListPage from '../pages/AccountListPage';
 import HomePage from '../pages/HomePage';
 import CategoryFormPage from '../pages/CategoryFormPage';
+import AccountFormPage from '../pages/AccountFormPage';
+import TransactionListPage from '../pages/TransactionListPage';
+import TransactionFormPage from '../pages/TransactionFormPage';
 
 const AuthenticatedRoutes = () => {
 
@@ -19,6 +23,14 @@ const AuthenticatedRoutes = () => {
                 <Route path="/categories/:id" element={<CategoryFormPage />} />
 
                 <Route path="/products" element={<ProductListPage />} />
+
+                <Route path="/accounts" element={<AccountListPage />} />
+                <Route path="/accounts/new" element={<AccountFormPage />} />
+                <Route path="/accounts/:id" element={<AccountFormPage />} />
+                
+                <Route path="/transactions" element={<TransactionListPage />} />
+                <Route path="/transactions/new" element={<TransactionFormPage />} />
+                <Route path="/transactions/:id" element={<TransactionFormPage />} />
                 
                 <Route path="*" element={<HomePage />} />
             </Routes>

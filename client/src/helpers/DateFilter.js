@@ -1,6 +1,6 @@
 export const getCurrentMonth = () => {
     let now = new Date();
-    return `${now.getFullYear()}=${now.getMonth()+1}`;
+    return `${now.getFullYear()}-${now.getMonth()+1}`;
 }
 
 export const filterListByMonth = (list, date) => {
@@ -16,4 +16,10 @@ export const filterListByMonth = (list, date) => {
         }
     }
     return newList;
+}
+
+export const formatCurrentMonth = (currentMonth) => {
+    let [year, month] = currentMonth.split('-');
+    let months = ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'];
+    return `${months[parseInt(month) - 1]} de ${year}`;
 }

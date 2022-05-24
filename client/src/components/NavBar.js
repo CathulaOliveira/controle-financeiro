@@ -48,6 +48,26 @@ const NavBar = (props) => {
                 Produtos
               </NavLink>
             </li>
+            <li className="nav-item">
+              <NavLink
+                to="/accounts"
+                className={(navData) =>
+                  navData.isActive ? "nav-link active" : "nav-link"
+                }
+              >
+                Contas
+              </NavLink>
+            </li>
+            <li className="nav-item">
+              <NavLink
+                to="/transactions"
+                className={(navData) =>
+                  navData.isActive ? "nav-link active" : "nav-link"
+                }
+              >
+                Movimentações
+              </NavLink>
+            </li>
           </ul>
           <ul className="navbar-nav">
               <li className="nav-item justify-content-end">
