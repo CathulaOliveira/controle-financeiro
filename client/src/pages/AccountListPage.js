@@ -43,7 +43,10 @@ export const AccountListPage = (props) => {
                 <thead>
                     <tr>
                         <th>Código</th>
-                        <th>Nome</th>
+                        <th>Número</th>
+                        <th>Agência</th>
+                        <th>Banco</th>
+                        <th>Tipo</th>
                         <th>Ações</th>
                     </tr>
                 </thead>
@@ -51,7 +54,10 @@ export const AccountListPage = (props) => {
                     {data.map((account) => (
                         <tr key={account.id}>
                             <td>{account.id}</td>
-                            <td>{account.name}</td>
+                            <td>{account.number}</td>
+                            <td>{account.agency}</td>
+                            <td>{account.bank}</td>
+                            <td>{account.type}</td>
                             <td>
                                 <Link className="btn btn-primary" 
                                     to={`/accounts/${account.id}`}>

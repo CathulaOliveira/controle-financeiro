@@ -7,7 +7,10 @@ import AccountService from '../services/AccountService';
 export const AccountFormPage = () => {
     const [form, setForm] = useState({
         id: null,
-        name: '',
+        number: '',
+        agency: '',
+        bank: '',
+        type: '',
     });
     const [errors, setErrors] = useState({});
     const [pendingApiCall, setPendingApiCall] = useState(false);
@@ -22,7 +25,10 @@ export const AccountFormPage = () => {
                     if (response.data) {
                         setForm({
                             id: response.data.id,
-                            name: response.data.name
+                            number: response.data.number,
+                            agency: response.data.agency,
+                            bank: response.data.bank,
+                            type: response.data.type,
                         });
                         setApiError();
                     } else {
@@ -54,12 +60,15 @@ export const AccountFormPage = () => {
     };
 
     const onSubmit = () => {
-        const category = {
+        const account = {
             id: form.id,
-            name: form.name
+            number: form.number,
+            agency: form.agency,
+            bank: form.bank,
+            type: form.type,
         };
         setPendingApiCall(true);
-        AccountService.save(category)
+        AccountService.save(account)
             .then(() => {
                 setPendingApiCall(false);
                 setApiError();
@@ -81,14 +90,46 @@ export const AccountFormPage = () => {
             <h1 className="text-center">Cadastro de Conta</h1>
             <div className="col-12 mb-3">
                 <Input
-                    name="name"
-                    label="Nome"
-                    placeholder="Informe o nome"
-                    value={form.name}
+                    name="number"
+                    label="Número"
+                    placeholder="Informe o número"
+                    value={form.number}
+                    onChange={onChange}
+                    hasError={errors.number && true}
+                    error={errors.number} 
+                />
+            </div>
+            <div className="col-12 mb-3">
+                <Input
+                    name="agency"
+                    label="Agência"
+                    placeholder="Informe a agência"
+                    value={form.agency}
                     onChange={onChange}
                     hasError={errors.name && true}
                     error={errors.name} 
                 />
+            </div>
+            <div className="col-12 mb-3">
+                <Input
+                    name="bank"
+                    label="Banco"
+                    placeholder="Informe o banco"
+                    value={form.bank}
+                    onChange={onChange}
+                    hasError={errors.name && true}
+                    error={errors.name} 
+                />
+            </div>
+            <div className="col-12 mb-3">
+                <label>Tipo</label>
+                <br/>
+                <select value={form.type}>
+                    <option value="CARTAO">Selecione</option>
+                    <option value="CONTA_CORRENTE">Conta Corrente</option>
+                    <option value="CONTA_POUPANCA">Conta Poupança</option>
+                    <option value="CARTAO">Cartão</option>
+                </select>
             </div>
             <div className="text-center">
                 <ButtonWithProgress
