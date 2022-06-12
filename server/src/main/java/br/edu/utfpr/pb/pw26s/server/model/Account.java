@@ -1,6 +1,7 @@
 package br.edu.utfpr.pb.pw26s.server.model;
 
 import br.edu.utfpr.pb.pw26s.server.enums.TypeAccount;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -33,8 +34,9 @@ public class Account {
 
     @NotNull
     @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
     private TypeAccount type;
 
-    @Column(nullable = false)
-    private Double balance;
+    @JsonIgnore
+    private Double balance = Double.valueOf(0);
 }

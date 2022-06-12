@@ -123,13 +123,20 @@ export const AccountFormPage = () => {
             </div>
             <div className="col-12 mb-3">
                 <label>Tipo</label>
-                <br/>
-                <select value={form.type}>
-                    <option value="CARTAO">Selecione</option>
-                    <option value="CONTA_CORRENTE">Conta Corrente</option>
-                    <option value="CONTA_POUPANCA">Conta Poupança</option>
-                    <option value="CARTAO">Cartão</option>
+                <select
+                    className="form-control"
+                    name="type"
+                    value={form.type}
+                    onChange={onChange}
+                >
+                    <option>Selecione</option>
+                    <option key="CONTA_CORRENTE" value="CONTA_CORRENTE">Conta Corrente</option>
+                    <option key="CONTA_POUPANCA" value="CONTA_POUPANCA">Conta Poupança</option>
+                    <option key="CARTAO" value="CARTAO">Cartão</option>
                 </select>
+                {errors.category && (
+                    <div className="invalid-feedback d-block">{errors.category}</div>
+                )}
             </div>
             <div className="text-center">
                 <ButtonWithProgress

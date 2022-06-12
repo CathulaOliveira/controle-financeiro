@@ -53,11 +53,6 @@ export const TransactionListPage = (props) => {
                             <td>{transaction.id}</td>
                             <td>{transaction.name}</td>
                             <td>
-                                <Link className="btn btn-primary" 
-                                    to={`/transactions/${transaction.id}`}>
-                                    Editar
-                                </Link>
-
                                 <button className="btn btn-danger" 
                                   onClick={() => onRemove(transaction.id)}>
                                       Remover

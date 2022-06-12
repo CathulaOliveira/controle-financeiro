@@ -40,16 +40,6 @@ const NavBar = (props) => {
             </li>
             <li className="nav-item">
               <NavLink
-                to="/products"
-                className={(navData) =>
-                  navData.isActive ? "nav-link active" : "nav-link"
-                }
-              >
-                Produtos
-              </NavLink>
-            </li>
-            <li className="nav-item">
-              <NavLink
                 to="/accounts"
                 className={(navData) =>
                   navData.isActive ? "nav-link active" : "nav-link"

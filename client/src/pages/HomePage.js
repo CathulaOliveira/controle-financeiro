@@ -2,6 +2,8 @@ import React, { useEffect, useState } from 'react';
 import { getCurrentMonth } from '../helpers/DateFilter';
 import TableHome from '../components/TableHome';
 import Dashboard from '../components/Dashboard';
+import TransactionService from '../services/TransactionService'
+import BalanceArea from '../components/BalanceArea';
 
 const headerStyle = {
     backgroundColor: '#820ad1',
@@ -27,8 +29,9 @@ const HomePage = () => {
     // const [filteredList, setFilteredList] = useState([]);
     const [currentMonth, setCurrentMonth] = useState('');
     const [apiError, setApiError] = useState();
-    const [income, setIncome] = useState(0);
-    const [expense, setExpense] = useState(0);
+    const [entry, setEntry] = useState(0);
+    const [output, setOutput] = useState(0);
+    const [balance, setBalance] = useState(0);
 
     useEffect(() => {
         loadData();
@@ -36,11 +39,53 @@ const HomePage = () => {
 
     const loadData = () => {
         setCurrentMonth(getCurrentMonth());
+        loadEntry(getCurrentMonth());
+        loadOutput(getCurrentMonth());
+        loadBalance(getCurrentMonth());
     }
 
     const handleMonthChange = (newMonth) => {
         setCurrentMonth(newMonth);
+        loadEntry(newMonth);
+        loadOutput(newMonth);
+        loadBalance(newMonth);
     }
+    
+    const loadEntry = (mesAno) => {
+        let [year, month] = mesAno.split('-');
+        TransactionService.calcularTotal(month, year, 'ENTRADA')
+            .then((response) => {
+                setEntry(response.data);
+                setApiError();
+            })
+            .catch((error) => {
+                setApiError('Falha ao carregar o total de entradas');
+            });
+    };
+
+    const loadOutput = (mesAno) => {
+        let [year, month] = mesAno.split('-');
+        TransactionService.calcularTotal(month, year, 'SAIDA')
+            .then((response) => {
+                setOutput(response.data);
+                setApiError();
+            })
+            .catch((error) => {
+                setApiError('Falha ao carregar o total de saídas');
+            });
+    };
+
+    const loadBalance = (mesAno) => {
+        let [year, month] = mesAno.split('-');
+        TransactionService.calcularTotal(month, year, 'TRANSFERENCIA')
+            .then((response) => {
+                setBalance(response.data);
+                setApiError();
+            })
+            .catch((error) => {
+                setApiError('Falha ao carregar o saldo total');
+            });
+    };
     
     return (
         <div>
@@ -51,9 +96,11 @@ const HomePage = () => {
                 <Dashboard 
                     currentMonth={currentMonth}
                     onMonthChange={handleMonthChange}
-                    income={income}
-                    expense={expense}
+                    entry={entry}
+                    output={output}
+                    balance={balance}
                 />
+                <BalanceArea />
                 <TableHome />
             </div>
         </div>

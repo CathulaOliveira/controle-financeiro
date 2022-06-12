@@ -16,11 +16,16 @@ const remove = (id) => {
     return axios.delete(`/transactions/${id}`, {headers: getAuthHeader()});
 }
 
+const calcularTotal = (mes, ano, tipo) => {
+    return axios.get(`/transactions/calcularTotal/${mes}/${ano}/${tipo}`, {headers: getAuthHeader()});
+}
+
 const TransactionService = {
     save,
     findAll,
     findOne,
-    remove
+    remove,
+    calcularTotal
 }
 
 const getAuthHeader = () => {

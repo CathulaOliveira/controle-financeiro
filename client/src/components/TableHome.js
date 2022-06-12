@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { formatDate } from '../helpers/DateFilter'
+import TransactionService from '../services/TransactionService';
 
 const tableStyle = {
     width: '100%',
@@ -27,15 +28,15 @@ export const TableHome = () => {
     }, []);
 
     const loadData = () => {
-        setData([{date: '18/05/2022', category : {name: 'teste'}, title: 'title teste', value: 120000000}])
-        // CategoryService.findAll()
-        //     .then((response) => {
-        //         setData(response.data);
-        //         setApiError();
-        //     })
-        //     .catch((error) => {
-        //         setApiError('Falha ao carregar a lista de categorias');
-        //     });
+        // setData([{date: '01/06/2022', category : {name: 'teste'}, title: 'title teste', value: 1200}])
+        TransactionService.findAll()
+            .then((response) => {
+                setData(response.data);
+                setApiError();
+            })
+            .catch((error) => {
+                setApiError('Falha ao carregar a lista de movimentações');
+            });
     };
     return (
         <div>
@@ -44,7 +45,7 @@ export const TableHome = () => {
                     <tr style={thStyle}>
                         <th style={{width:'150px', padding: '10px 0px 10px 20px'}}>Data</th>
                         <th style={{width:'200px', padding: '10px 0px 10px 10px'}}>Categoria</th>
-                        <th style={{padding: '10px 0px 10px 10px'}}>Título</th>
+                        <th style={{width:'200px', padding: '10px 0px 10px 10px'}}>Tipo</th>
                         <th style={{width:'150px', padding: '10px 0px 10px 10px'}}>Valor</th>
                     </tr>
                 </thead>
@@ -53,8 +54,8 @@ export const TableHome = () => {
                         <tr key={index}>
                             <td style={{width:'150px', padding: '10px 0px 10px 20px'}}>{item.date}</td>
                             <td  style={{width:'200px', padding: '10px 0px 10px 10px'}}>{item.category.name}</td>
-                            <td  style={{padding: '10px 0px 10px 10px'}}>{item.title}</td>
-                            <td  style={{width:'150px', padding: '10px 0px 10px 10px'}}>R$ {item.value}</td>
+                            <td  style={{width:'200px', padding: '10px 0px 10px 10px'}}>{item.type}</td>
+                            <td  style={{width:'150px', padding: '10px 0px 10px 10px'}}>R$ {item.price}</td>
                         </tr>
                     ))}
                 </tbody>

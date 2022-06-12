@@ -85,17 +85,17 @@ export const Dashboard = (props) => {
             </div>
             <div style={resumeArea}>
                 <div style={resumeAreaContainer}>
-                    <div style={resumeTitle}>Receitas</div>
-                    <div style={resumeInfo}>{props.income}</div>
+                    <div style={resumeTitle}>Entradas</div>
+                    <div style={resumeInfo}>{props.entry}</div>
                 </div>
                 <div style={resumeAreaContainer}>
                     
-                    <div style={resumeTitle}>Despesas</div>
-                    <div style={resumeInfo}>{props.expense}</div>
+                    <div style={resumeTitle}>Saídas</div>
+                    <div style={resumeInfo}>{props.output}</div>
                 </div>
                 <div style={resumeAreaContainer}>
                     <div style={resumeTitle}>Balanço</div>
-                    <div style={resumeInfo}>{props.income - props.expense}</div>
+                    <div style={resumeInfo}>{props.entry - props.output}</div>
                 </div>
             </div>
         </div>

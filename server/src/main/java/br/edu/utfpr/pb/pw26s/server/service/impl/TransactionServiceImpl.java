@@ -38,7 +38,7 @@ public class TransactionServiceImpl
 
     public List<Transaction> transactionsByMonthAndYearAndType(int month, int year, TypeTransaction type) {
         LocalDate dateStart = LocalDate.of(year, month, 1);
-        LocalDate dateFinish = LocalDate.of(year, month, 1);
+        LocalDate dateFinish = LocalDate.of(year, month+1, 1);
         List<Transaction> listTransactions = transactionRepository.findByDateBetweenAndType(
                 dateStart,
                 dateFinish,
@@ -47,13 +47,21 @@ public class TransactionServiceImpl
         return listTransactions;
     }
 
-    public Double calculaTotalPorMesEAno(int month, int year, TypeTransaction type) {
+    public Double calculaTotalPorMesEAnoETipo(String month, String year, String type) {
+        int mes = Integer.valueOf(month);
+        int ano = Integer.valueOf(year);
+        TypeTransaction tipo = TypeTransaction.valueOf(type);
         List<Transaction> listTransactions = transactionsByMonthAndYearAndType(
-                month,
-                year,
-                type
+                mes,
+                ano,
+                tipo
         );
         return listTransactions.stream().mapToDouble(Transaction::getPrice).sum();
     }
 
+    // culpa do Aspect
+    @Override
+    public Transaction save(Transaction entity) {
+        return super.save(entity);
+    }
 }

@@ -1,0 +1,10 @@
+.op1 {
+    display: inline-block;
+    min-width:40vw;
+}
+
+.op2 {
+    display: inline-block;
+    float:right;
+    padding-right: 30%;
+}

@@ -2,8 +2,8 @@ package br.edu.utfpr.pb.pw26s.server.enums;
 
 public enum TypeTransaction {
 
-    RECEITA("Receita"),
-    DESPESA("Despesa"),
+    ENTRADA("Entrada"),
+    SAIDA("Saída"),
     TRANSFERENCIA("Transferência entre contas");
 
     private String descricao;
