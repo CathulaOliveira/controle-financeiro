@@ -17,7 +17,7 @@ const remove = (id) => {
 }
 
 const calcularTotal = (mes, ano, tipo) => {
-    return axios.get(`/transactions/calcularTotal/${mes}/${ano}/${tipo}`, {headers: getAuthHeader()});
+    return axios.get(`/transactions/calcular-total/${mes}/${ano}/${tipo}`, {headers: getAuthHeader()});
 }
 
 const TransactionService = {

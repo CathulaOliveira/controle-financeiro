@@ -52,7 +52,7 @@ export const TransactionFormPage = () => {
         }).catch((erro) => {
             setApiError('Falha ao carregar a combo de categorias.');
         });
-        AccountService.findAll().then((response) => {
+        AccountService.findByUserLogged().then((response) => {
             setAccounts(response.data);
             setApiError();
         }).catch((erro) => {
@@ -62,7 +62,6 @@ export const TransactionFormPage = () => {
 
 
     const onChange = (event) => {
-        console.log(event)
         const { value, name } = event.target;
         setForm((previousForm) => {
             return {

@@ -17,8 +17,12 @@ public class Transaction {
     private Long id;
 
     @ManyToOne
-    @JoinColumn(name = "account_id", referencedColumnName = "id")
-    private Account account;
+    @JoinColumn(name = "account_origin_id", referencedColumnName = "id")
+    private Account accountOrigin;
+
+    @ManyToOne
+    @JoinColumn(name = "account_destination_id", referencedColumnName = "id")
+    private Account accountDestination;
 
     @ManyToOne
     @JoinColumn(name = "category_id", referencedColumnName = "id")

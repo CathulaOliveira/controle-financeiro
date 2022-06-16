@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { formatDate } from '../helpers/DateFilter'
-import TransactionService from '../services/TransactionService';
+import AccountService from '../services/AccountService';
 
 const tableStyle = {
     width: '100%',
@@ -12,21 +11,55 @@ const tableStyle = {
 }
 
 
-export const BalanceArea = () => {
-    const [data, setData] = useState([]);
+export const BalanceArea = (props) => {
+    const [form, setForm] = useState({
+        account: null,
+    });
+    const [errors, setErrors] = useState({});
+    const [pendingApiCall, setPendingApiCall] = useState(false);
     const [apiError, setApiError] = useState();
+    const [accounts, setAccounts] = useState([]);
 
     useEffect(() => {
-        loadData();
-    }, []);
+        setAccounts(props.accounts);
+    });
 
-    const loadData = () => {
-        
+
+    const onChange = (event) => {
+        const { value, name } = event.target;
+        setForm((previousForm) => {
+            return {
+                ...previousForm,
+                [name]: value,
+            }
+        });
+        setErrors((previousError) => {
+            return {
+                ...previousError,
+                [name]: undefined,
+            }
+        });
     };
     return (
         <div>
             <table style={tableStyle}>
-                ...
+            <div className="col-12 mb-3">
+                <label>Conta</label>
+                <select
+                    className="form-control"
+                    name="account"
+                    value={form.account}
+                    onChange={onChange}
+                >
+                    <option>Selecione</option>
+                    {accounts.map((account) => (
+                        <option key={account.id} value={account.id}>{account.bank} - {account.type}</option>
+                    ))}
+                </select>
+                {errors.account && (
+                    <div className="invalid-feedback d-block">{errors.account}</div>
+                )}
+            </div>
             </table>
         </div>
     );

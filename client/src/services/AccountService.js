@@ -16,11 +16,16 @@ const remove = (id) => {
     return axios.delete(`/accounts/${id}`, {headers: getAuthHeader()});
 }
 
+const findByUserLogged = () => {
+    return axios.get('/accounts/find-by-user-logged', {headers: getAuthHeader()});
+}
+
 const AccountService = {
     save,
     findAll,
     findOne,
-    remove
+    remove,
+    findByUserLogged
 }
 
 const getAuthHeader = () => {

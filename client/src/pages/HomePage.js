@@ -4,6 +4,7 @@ import TableHome from '../components/TableHome';
 import Dashboard from '../components/Dashboard';
 import TransactionService from '../services/TransactionService'
 import BalanceArea from '../components/BalanceArea';
+import AccountService from '../services/AccountService';
 
 const headerStyle = {
     backgroundColor: '#820ad1',
@@ -32,6 +33,7 @@ const HomePage = () => {
     const [entry, setEntry] = useState(0);
     const [output, setOutput] = useState(0);
     const [balance, setBalance] = useState(0);
+    const [accounts, setAccounts] = useState([]);
 
     useEffect(() => {
         loadData();
@@ -42,6 +44,12 @@ const HomePage = () => {
         loadEntry(getCurrentMonth());
         loadOutput(getCurrentMonth());
         loadBalance(getCurrentMonth());
+        AccountService.findByUserLogged().then((response) => {
+            setAccounts(response.data);
+            setApiError();
+        }).catch((erro) => {
+            setApiError('Falha ao carregar a combo de contas.');
+        });
     }
 
     const handleMonthChange = (newMonth) => {
@@ -100,7 +108,7 @@ const HomePage = () => {
                     output={output}
                     balance={balance}
                 />
-                <BalanceArea />
+                <BalanceArea accounts={accounts}/>
                 <TableHome />
             </div>
         </div>
