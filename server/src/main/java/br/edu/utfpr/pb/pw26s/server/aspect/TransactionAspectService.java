@@ -2,12 +2,12 @@ package br.edu.utfpr.pb.pw26s.server.aspect;
 
 import br.edu.utfpr.pb.pw26s.server.model.Transaction;
 import br.edu.utfpr.pb.pw26s.server.service.BalanceService;
-import br.edu.utfpr.pb.pw26s.server.service.impl.AccountServiceImpl;
-import lombok.AllArgsConstructor;
+import br.edu.utfpr.pb.pw26s.server.service.TransactionService;
 import lombok.RequiredArgsConstructor;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.After;
 import org.aspectj.lang.annotation.Aspect;
+import org.aspectj.lang.annotation.Before;
 import org.springframework.stereotype.Component;
 
 @Aspect
@@ -16,14 +16,16 @@ import org.springframework.stereotype.Component;
 public class TransactionAspectService {
 
     private final BalanceService balanceService;
+    private final TransactionService transactionService;
 
     @After(value = "execution(* br.edu.utfpr.pb.pw26s.server.service.impl.TransactionServiceImpl.save(..)) && args(transaction)")
-    public void beforeTransactionSave(JoinPoint joinPoint, Transaction transaction) {
+    public void afterTransactionSave(JoinPoint joinPoint, Transaction transaction) {
         balanceService.atualizarSaldoContaEmInclusaoDeTranferencia(transaction);
     }
 
-    @After(value = "execution(* br.edu.utfpr.pb.pw26s.server.service.impl.TransactionServiceImpl.delete(..)) && args(transaction)")
-    public void afterTransactionDelete(JoinPoint joinPoint, Transaction transaction) {
+    @Before(value = "execution(* br.edu.utfpr.pb.pw26s.server.service.impl.TransactionServiceImpl.delete(..)) && args(id)")
+    public void beforeTransactionDelete(JoinPoint joinPoint, Long id) {
+        Transaction transaction = transactionService.findOne(id);
         balanceService.atualizarSaldoContaEmExclusaoDeTranferencia(transaction);
     }
 }

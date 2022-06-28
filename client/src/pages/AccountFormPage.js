@@ -65,7 +65,7 @@ export const AccountFormPage = () => {
             number: form.number,
             agency: form.agency,
             bank: form.bank,
-            type: form.type,
+            type: form.type ? form.type : null,
         };
         setPendingApiCall(true);
         AccountService.save(account)
@@ -75,6 +75,7 @@ export const AccountFormPage = () => {
                 navigate('/accounts');
             })
             .catch((error) => {
+                console.log(error.response.data.validationErrors)
                 setPendingApiCall(false);
                 if (error.response.data && error.response.data.validationErrors) {
                     setErrors(error.response.data.validationErrors);
@@ -106,8 +107,8 @@ export const AccountFormPage = () => {
                     placeholder="Informe a agência"
                     value={form.agency}
                     onChange={onChange}
-                    hasError={errors.name && true}
-                    error={errors.name} 
+                    hasError={errors.agency && true}
+                    error={errors.agency} 
                 />
             </div>
             <div className="col-12 mb-3">
@@ -117,8 +118,8 @@ export const AccountFormPage = () => {
                     placeholder="Informe o banco"
                     value={form.bank}
                     onChange={onChange}
-                    hasError={errors.name && true}
-                    error={errors.name} 
+                    hasError={errors.bank && true}
+                    error={errors.bank} 
                 />
             </div>
             <div className="col-12 mb-3">
@@ -134,8 +135,8 @@ export const AccountFormPage = () => {
                     <option key="CONTA_POUPANCA" value="CONTA_POUPANCA">Conta Poupança</option>
                     <option key="CARTAO" value="CARTAO">Cartão</option>
                 </select>
-                {errors.category && (
-                    <div className="invalid-feedback d-block">{errors.category}</div>
+                {errors.type && (
+                    <div className="invalid-feedback d-block">{errors.type}</div>
                 )}
             </div>
             <div className="text-center">

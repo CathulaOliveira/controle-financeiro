@@ -1,24 +1,25 @@
 import React, { useEffect, useState } from 'react';
+import { typeAccountFormat } from '../helpers/EnumHelper';
+import { currencyFormat } from '../helpers/NumberHelper';
 import AccountService from '../services/AccountService';
+import '../css/container.css';
 
-const tableStyle = {
+
+const containerStyle =  {
     width: '100%',
     backgroundColor: '#FFF',
     padding: 20,
     boxShadow: "0px 0px 5px #CCC",
     borderRadius: 10,
     marginTop: 20,
+    display: 'flex',
 }
 
-
 export const BalanceArea = (props) => {
-    const [form, setForm] = useState({
-        account: null,
-    });
     const [errors, setErrors] = useState({});
-    const [pendingApiCall, setPendingApiCall] = useState(false);
     const [apiError, setApiError] = useState();
     const [accounts, setAccounts] = useState([]);
+    const [accountSelected, setAccountSelected] = useState(); 
 
     useEffect(() => {
         setAccounts(props.accounts);
@@ -27,40 +28,45 @@ export const BalanceArea = (props) => {
 
     const onChange = (event) => {
         const { value, name } = event.target;
-        setForm((previousForm) => {
-            return {
-                ...previousForm,
-                [name]: value,
-            }
-        });
-        setErrors((previousError) => {
-            return {
-                ...previousError,
-                [name]: undefined,
-            }
-        });
+        props.onAccountChange(value);
+        loadBalance(value);
     };
+
+    const loadBalance = (accountId) => {
+        AccountService.getBalance(accountId).then((response) => {
+            setAccountSelected(response.data)
+            setApiError();
+        }).catch((erro) => {
+            setApiError('Falha ao carregar a combo de contas.');
+        });
+    } 
+
     return (
         <div>
-            <table style={tableStyle}>
-            <div className="col-12 mb-3">
-                <label>Conta</label>
-                <select
-                    className="form-control"
-                    name="account"
-                    value={form.account}
-                    onChange={onChange}
-                >
-                    <option>Selecione</option>
-                    {accounts.map((account) => (
-                        <option key={account.id} value={account.id}>{account.bank} - {account.type}</option>
-                    ))}
-                </select>
-                {errors.account && (
-                    <div className="invalid-feedback d-block">{errors.account}</div>
-                )}
+            <div className='container' style={containerStyle}>
+                <div className='container-padding container-flex-2'>
+                    <label>Conta</label>
+                    <br></br>
+                    <select
+                        className="form-control"
+                        name="account"
+                        onChange={onChange}
+                    >
+                        <option>Selecione</option>
+                        {accounts.map((account) => (
+                            <option key={account.id} value={account.id}>{account.bank} - {typeAccountFormat(account.type)}</option>
+                        ))}
+                    </select>
+                    {errors.account && (
+                        <div className="invalid-feedback d-block">{errors.account}</div>
+                    )}
+                </div>
+                <div className='container-flex-1'>
+                    <label>Saldo</label>
+                    <br></br>
+                    <b><label className='padding-top'>{currencyFormat(accountSelected)}</label></b>
+                </div>
             </div>
-            </table>
         </div>
     );
 }

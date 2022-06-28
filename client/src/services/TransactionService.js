@@ -16,8 +16,20 @@ const remove = (id) => {
     return axios.delete(`/transactions/${id}`, {headers: getAuthHeader()});
 }
 
-const calcularTotal = (mes, ano, tipo) => {
-    return axios.get(`/transactions/calcular-total/${mes}/${ano}/${tipo}`, {headers: getAuthHeader()});
+const calcularTotalEntradas = (filter) => {
+    return axios.post(`/transactions/calcular-total-entradas`, filter, {headers: getAuthHeader()});
+}
+
+const calcularTotalSaidas = (filter) => {
+    return axios.post(`/transactions/calcular-total-saidas`, filter, {headers: getAuthHeader()});
+}
+
+const findByAccount = (filter) => {
+    return axios.post(`/transactions/find-by-account`, filter, {headers: getAuthHeader()});
+}
+
+const findByUserLogged = (filter) => {
+    return axios.get(`/transactions/find-by-user-logged`, {headers: getAuthHeader()});
 }
 
 const TransactionService = {
@@ -25,7 +37,10 @@ const TransactionService = {
     findAll,
     findOne,
     remove,
-    calcularTotal
+    calcularTotalEntradas,
+    calcularTotalSaidas,
+    findByAccount,
+    findByUserLogged
 }
 
 const getAuthHeader = () => {

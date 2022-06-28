@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
+import { typeAccountFormat } from '../helpers/EnumHelper';
 import AccountService from '../services/AccountService';
 
 export const AccountListPage = (props) => {
@@ -11,7 +12,7 @@ export const AccountListPage = (props) => {
     }, []);
 
     const loadData = () => {
-        AccountService.findAll()
+        AccountService.findByUserLogged()
             .then((response) => {
                 setData(response.data);
                 setApiError();
@@ -57,7 +58,7 @@ export const AccountListPage = (props) => {
                             <td>{account.number}</td>
                             <td>{account.agency}</td>
                             <td>{account.bank}</td>
-                            <td>{account.type}</td>
+                            <td>{typeAccountFormat(account.type)}</td>
                             <td>
                                 <Link className="btn btn-primary" 
                                     to={`/accounts/${account.id}`}>

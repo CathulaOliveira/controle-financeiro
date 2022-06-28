@@ -1,7 +1,6 @@
 package br.edu.utfpr.pb.pw26s.server.service.impl;
 
 import br.edu.utfpr.pb.pw26s.server.model.Account;
-import br.edu.utfpr.pb.pw26s.server.model.Transaction;
 import br.edu.utfpr.pb.pw26s.server.model.User;
 import br.edu.utfpr.pb.pw26s.server.repository.AccountRepository;
 import br.edu.utfpr.pb.pw26s.server.service.AccountService;
@@ -33,6 +32,16 @@ public class AccountServiceImpl
     public List<Account> findByUserLogged() {
         User user = userService.getUserLogged();
         return findByUserId(user.getId());
+    }
+
+    public Double getBalance(Long accountId) {
+        return findOne(accountId).getBalance();
+    }
+
+    // culpa do Aspect
+    @Override
+    public Account save(Account entity) {
+        return super.save(entity);
     }
 
 }

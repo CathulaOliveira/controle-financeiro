@@ -1,16 +1,11 @@
 package br.edu.utfpr.pb.pw26s.server.controller;
 
+import br.edu.utfpr.pb.pw26s.server.filter.FilterBalance;
 import br.edu.utfpr.pb.pw26s.server.model.Transaction;
 import br.edu.utfpr.pb.pw26s.server.service.CrudService;
-import br.edu.utfpr.pb.pw26s.server.service.TransactionService;
 import br.edu.utfpr.pb.pw26s.server.service.impl.TransactionServiceImpl;
-import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -26,10 +21,23 @@ public class TransactionController extends CrudController<Transaction, Long> {
         return this.transactionService;
     }
 
-    @GetMapping("calcular-total/{mes}/{ano}/{tipo}")
-    public Double calcularTotal(@PathVariable String mes,
-                                           @PathVariable String ano,
-                                           @PathVariable String tipo) {
-        return this.transactionService.calculaTotalPorMesEAnoETipo(mes, ano, tipo);
+    @PostMapping("calcular-total-entradas")
+    public Double calcularTotalEntradas(@RequestBody FilterBalance filter) {
+        return this.transactionService.calculaEntradasByMonthAndYearAndAccount(filter);
+    }
+
+    @PostMapping("calcular-total-saidas")
+    public Double calcularTotalSaidas(@RequestBody FilterBalance filter) {
+        return this.transactionService.calculaSaidasByMonthAndYearAndAccount(filter);
+    }
+
+    @PostMapping("find-by-account")
+    public List<Transaction> findByAccount(@RequestBody FilterBalance filter) {
+        return this.transactionService.transactionsByMonthAndYearAndAccount(filter);
+    }
+
+    @GetMapping("find-by-user-logged")
+    public List<Transaction> findByUserLogged() {
+        return this.transactionService.findByUserLogged();
     }
 }

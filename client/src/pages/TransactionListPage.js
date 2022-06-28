@@ -1,5 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
+import { formatDate } from '../helpers/DateHelper';
+import { typeTransactionFormat } from '../helpers/EnumHelper';
+import { currencyFormat } from '../helpers/NumberHelper';
 import TransactionService from '../services/TransactionService';
 
 export const TransactionListPage = (props) => {
@@ -11,7 +14,7 @@ export const TransactionListPage = (props) => {
     }, []);
 
     const loadData = () => {
-        TransactionService.findAll()
+        TransactionService.findByUserLogged()
             .then((response) => {
                 setData(response.data);
                 setApiError();
@@ -43,7 +46,10 @@ export const TransactionListPage = (props) => {
                 <thead>
                     <tr>
                         <th>Código</th>
-                        <th>Nome</th>
+                        <th>Data</th>
+                        <th>Tipo</th>
+                        <th>Valor</th>
+                        <th>Categoria</th>
                         <th>Ações</th>
                     </tr>
                 </thead>
@@ -51,7 +57,10 @@ export const TransactionListPage = (props) => {
                     {data.map((transaction) => (
                         <tr key={transaction.id}>
                             <td>{transaction.id}</td>
-                            <td>{transaction.name}</td>
+                            <td>{formatDate(transaction.date, 'DD/MM/yyyy')}</td>
+                            <td>{typeTransactionFormat(transaction.type)}</td>
+                            <td>{currencyFormat(transaction.price)}</td>
+                            <td>{transaction.category.name}</td>
                             <td>
                                 <button className="btn btn-danger" 
                                   onClick={() => onRemove(transaction.id)}>

@@ -2,7 +2,6 @@ import React from 'react';
 import { Route, Routes } from 'react-router-dom';
 import NavBar from '../components/NavBar';
 import CategoryListPage from '../pages/CategoryListPage';
-import ProductListPage from '../pages/ProductListPage';
 import AccountListPage from '../pages/AccountListPage';
 import HomePage from '../pages/HomePage';
 import CategoryFormPage from '../pages/CategoryFormPage';
@@ -21,8 +20,6 @@ const AuthenticatedRoutes = () => {
                 <Route path="/categories" element={<CategoryListPage />} />
                 <Route path="/categories/new" element={<CategoryFormPage />} />
                 <Route path="/categories/:id" element={<CategoryFormPage />} />
-
-                <Route path="/products" element={<ProductListPage />} />
 
                 <Route path="/accounts" element={<AccountListPage />} />
                 <Route path="/accounts/new" element={<AccountFormPage />} />

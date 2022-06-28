@@ -6,16 +6,10 @@ import TransactionService from '../services/TransactionService';
 import CategoryService from '../services/CategoryService';
 import AccountService from '../services/AccountService';
 import '../css/form.css';
+import { typeAccountFormat } from '../helpers/EnumHelper';
 
 export const TransactionFormPage = () => {
-    const [form, setForm] = useState({
-        id: null,
-        description: '',
-        category: null,
-        account: null,
-        type: '',
-        date: null,
-    });
+    const [form, setForm] = useState({});
     const [errors, setErrors] = useState({});
     const [pendingApiCall, setPendingApiCall] = useState(false);
     const [apiError, setApiError] = useState();
@@ -26,7 +20,6 @@ export const TransactionFormPage = () => {
 
     useEffect(() => {
         if (id) {
-            console.log(id)
             TransactionService.findOne(id)
                 .then((response) => {
                     if (response.data) {
@@ -34,7 +27,8 @@ export const TransactionFormPage = () => {
                             id: response.data.id,
                             description: response.data.description,
                             category: response.category,
-                            account: response.account,
+                            accountOrigin: response.accountOrigin,
+                            accountDestination: response.accountDestination,
                             price: response.price
                         });
                         setApiError();
@@ -52,7 +46,7 @@ export const TransactionFormPage = () => {
         }).catch((erro) => {
             setApiError('Falha ao carregar a combo de categorias.');
         });
-        AccountService.findByUserLogged().then((response) => {
+        AccountService.findAll().then((response) => {
             setAccounts(response.data);
             setApiError();
         }).catch((erro) => {
@@ -82,7 +76,8 @@ export const TransactionFormPage = () => {
             id: form.id,
             description: form.description,
             category: { id: form.category },
-            account: { id: form.account },
+            accountOrigin: { id: form.accountOrigin },
+            accountDestination: form.accountDestination && form.accountDestination !== 'Selecione' ? {id: form.accountDestination} : null,
             price: form.price,
             type: form.type,
             date: form.date,
@@ -112,17 +107,17 @@ export const TransactionFormPage = () => {
                 <label>Conta</label>
                 <select
                     className="form-control"
-                    name="account"
-                    value={form.account}
+                    name="accountOrigin"
+                    value={form.accountOrigin}
                     onChange={onChange}
                 >
                     <option>Selecione</option>
                     {accounts.map((account) => (
-                        <option key={account.id} value={account.id}>{account.bank} - {account.type}</option>
+                        <option key={account.id} value={account.id}>{account.bank} - {typeAccountFormat(account.type)}</option>
                     ))}
                 </select>
-                {errors.account && (
-                    <div className="invalid-feedback d-block">{errors.account}</div>
+                {errors.accountOrigin && (
+                    <div className="invalid-feedback d-block">{errors.accountOrigin}</div>
                 )}
             </div>
             <div className="col-12 mb-3">
@@ -155,7 +150,7 @@ export const TransactionFormPage = () => {
                     )}
                 </div>
                 <div className='op2'>
-                    <label>Data e hora</label>
+                    <label>Data</label>
                     <br/>
                     <input 
                         className="form-control"
@@ -168,6 +163,24 @@ export const TransactionFormPage = () => {
                         <div className="invalid-feedback d-block">{errors.date}</div>
                     )}
                 </div>
+            </div>
+            <div className="col-12 mb-3">
+                <label>Conta destino</label>
+                <select
+                    className="form-control"
+                    name="accountDestination"
+                    value={form.accountDestination}
+                    onChange={onChange}
+                    disabled={form.type !== 'TRANSFERENCIA'}
+                >
+                    <option>Selecione</option>
+                    {accounts.map((account) => (
+                        <option key={account.id} value={account.id}>{account.bank} - {typeAccountFormat(account.type)}</option>
+                    ))}
+                </select>
+                {errors.accountDestination && (
+                    <div className="invalid-feedback d-block">{errors.accountDestination}</div>
+                )}
             </div>
             <div className="col-12 mb-3">
                 <Input

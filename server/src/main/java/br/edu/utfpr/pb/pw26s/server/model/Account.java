@@ -1,7 +1,6 @@
 package br.edu.utfpr.pb.pw26s.server.model;
 
 import br.edu.utfpr.pb.pw26s.server.enums.TypeAccount;
-import br.edu.utfpr.pb.pw26s.server.audit.Audit;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 
@@ -11,7 +10,7 @@ import javax.validation.constraints.Size;
 
 @Data
 @Entity
-public class Account extends Audit<User> {
+public class Account { //extends Audit<User> {
 
     @Id
     @GeneratedValue
@@ -36,4 +35,8 @@ public class Account extends Audit<User> {
 
     @JsonIgnore
     private Double balance = Double.valueOf(0);
+
+    @ManyToOne
+    @JoinColumn(name = "user_id", referencedColumnName = "id")
+    protected User user;
 }

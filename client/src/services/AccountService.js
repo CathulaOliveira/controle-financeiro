@@ -20,12 +20,17 @@ const findByUserLogged = () => {
     return axios.get('/accounts/find-by-user-logged', {headers: getAuthHeader()});
 }
 
+const getBalance = (id) => {
+    return axios.get(`/accounts/balance/${id}`, {headers: getAuthHeader()});
+}
+
 const AccountService = {
     save,
     findAll,
     findOne,
     remove,
-    findByUserLogged
+    findByUserLogged,
+    getBalance
 }
 
 const getAuthHeader = () => {

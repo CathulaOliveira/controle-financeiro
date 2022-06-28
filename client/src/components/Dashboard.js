@@ -1,4 +1,6 @@
-import { formatCurrentMonth } from "../helpers/DateFilter"
+import { formatCurrentMonth } from "../helpers/DateHelper"
+import { currencyFormat } from "../helpers/NumberHelper"
+import '../css/container.css';
 
 const tableStyle = {
     width: '100%',
@@ -86,16 +88,16 @@ export const Dashboard = (props) => {
             <div style={resumeArea}>
                 <div style={resumeAreaContainer}>
                     <div style={resumeTitle}>Entradas</div>
-                    <div style={resumeInfo}>{props.entry}</div>
+                    <div style={resumeInfo}>{currencyFormat(props.entry)}</div>
                 </div>
                 <div style={resumeAreaContainer}>
                     
                     <div style={resumeTitle}>Saídas</div>
-                    <div style={resumeInfo}>{props.output}</div>
+                    <div style={resumeInfo}>{currencyFormat(props.output)}</div>
                 </div>
                 <div style={resumeAreaContainer}>
                     <div style={resumeTitle}>Balanço</div>
-                    <div style={resumeInfo}>{props.entry - props.output}</div>
+                    <div style={resumeInfo}>{currencyFormat(props.entry - props.output)}</div>
                 </div>
             </div>
         </div>

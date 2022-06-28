@@ -16,6 +16,7 @@ public class Transaction {
     @GeneratedValue
     private Long id;
 
+    @NotNull
     @ManyToOne
     @JoinColumn(name = "account_origin_id", referencedColumnName = "id")
     private Account accountOrigin;
@@ -24,16 +25,19 @@ public class Transaction {
     @JoinColumn(name = "account_destination_id", referencedColumnName = "id")
     private Account accountDestination;
 
+    @NotNull
     @ManyToOne
     @JoinColumn(name = "category_id", referencedColumnName = "id")
     private Category category;
 
+    @NotNull
     @Column(nullable = false)
     private Double price;
 
     @Size(max = 250)
     private String description;
 
+    @NotNull
     private LocalDate date;
 
     @NotNull

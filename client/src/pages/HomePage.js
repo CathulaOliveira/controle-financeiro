@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { getCurrentMonth } from '../helpers/DateFilter';
+import { getCurrentMonth } from '../helpers/DateHelper';
 import TableHome from '../components/TableHome';
 import Dashboard from '../components/Dashboard';
 import TransactionService from '../services/TransactionService'
@@ -19,21 +19,14 @@ const h1Style = {
     paddingTop: 30,
 }
 
-const filteredList = [
-    {
-    title: "Teste"
-    }
-]
-
 const HomePage = () => {
-    const [list, setList] = useState([]);
-    // const [filteredList, setFilteredList] = useState([]);
     const [currentMonth, setCurrentMonth] = useState('');
     const [apiError, setApiError] = useState();
     const [entry, setEntry] = useState(0);
     const [output, setOutput] = useState(0);
-    const [balance, setBalance] = useState(0);
     const [accounts, setAccounts] = useState([]);
+    const [accountSelected, setAccountSelected] = useState(null);
+    const [transactions, setTransactions] = useState([])
 
     useEffect(() => {
         loadData();
@@ -41,9 +34,6 @@ const HomePage = () => {
 
     const loadData = () => {
         setCurrentMonth(getCurrentMonth());
-        loadEntry(getCurrentMonth());
-        loadOutput(getCurrentMonth());
-        loadBalance(getCurrentMonth());
         AccountService.findByUserLogged().then((response) => {
             setAccounts(response.data);
             setApiError();
@@ -54,14 +44,25 @@ const HomePage = () => {
 
     const handleMonthChange = (newMonth) => {
         setCurrentMonth(newMonth);
-        loadEntry(newMonth);
-        loadOutput(newMonth);
-        loadBalance(newMonth);
     }
-    
-    const loadEntry = (mesAno) => {
-        let [year, month] = mesAno.split('-');
-        TransactionService.calcularTotal(month, year, 'ENTRADA')
+
+    const handleAccountChange = (newAccount) => {
+        setAccountSelected(newAccount);
+    }
+
+    useEffect(() => {
+        reloadData();
+    }, [currentMonth, accountSelected]);
+
+    const reloadData = () => {
+        let [year, month] = currentMonth.split('-');
+        if (month && year && accountSelected) {     
+            let filter = {
+                month: month,
+                year: year,
+                accountId: accountSelected
+            }
+            TransactionService.calcularTotalEntradas(filter)
             .then((response) => {
                 setEntry(response.data);
                 setApiError();
@@ -69,32 +70,25 @@ const HomePage = () => {
             .catch((error) => {
                 setApiError('Falha ao carregar o total de entradas');
             });
-    };
-
-    const loadOutput = (mesAno) => {
-        let [year, month] = mesAno.split('-');
-        TransactionService.calcularTotal(month, year, 'SAIDA')
+            TransactionService.calcularTotalSaidas(filter)
             .then((response) => {
                 setOutput(response.data);
                 setApiError();
             })
             .catch((error) => {
-                setApiError('Falha ao carregar o total de saídas');
+                setApiError('Falha ao carregar o total de entradas');
             });
-    };
-
-    const loadBalance = (mesAno) => {
-        let [year, month] = mesAno.split('-');
-        TransactionService.calcularTotal(month, year, 'TRANSFERENCIA')
+            TransactionService.findByAccount(filter)
             .then((response) => {
-                setBalance(response.data);
+                setTransactions(response.data);
                 setApiError();
             })
             .catch((error) => {
-                setApiError('Falha ao carregar o saldo total');
+                setApiError('Falha ao carregar a lista de movimentações');
             });
-    };
-    
+        }
+    }
+
     return (
         <div>
             <div style={headerStyle}>
@@ -106,10 +100,9 @@ const HomePage = () => {
                     onMonthChange={handleMonthChange}
                     entry={entry}
                     output={output}
-                    balance={balance}
                 />
-                <BalanceArea accounts={accounts}/>
-                <TableHome />
+                <BalanceArea accounts={accounts} onAccountChange={handleAccountChange}/>
+                <TableHome transactions={transactions}/>
             </div>
         </div>
     );
