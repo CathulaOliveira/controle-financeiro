@@ -1,7 +1,10 @@
 package br.edu.utfpr.pb.pw26s.server.model;
 
 import br.edu.utfpr.pb.pw26s.server.enums.TypeTransaction;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -10,6 +13,9 @@ import java.time.LocalDate;
 
 @Entity
 @Data
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class Transaction {
 
     @Id

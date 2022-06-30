@@ -1,4 +1,4 @@
-package br.edu.utfpr.pb.pw26s.server;
+package br.edu.utfpr.pb.pw26s.server.controller;
 
 import br.edu.utfpr.pb.pw26s.server.model.User;
 import br.edu.utfpr.pb.pw26s.server.repository.UserRepository;

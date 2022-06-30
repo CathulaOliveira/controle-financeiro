@@ -1,10 +1,8 @@
-package br.edu.utfpr.pb.pw26s.server;
+package br.edu.utfpr.pb.pw26s.server.controller;
 
 import br.edu.utfpr.pb.pw26s.server.model.Category;
-import br.edu.utfpr.pb.pw26s.server.model.Product;
 import br.edu.utfpr.pb.pw26s.server.model.User;
 import br.edu.utfpr.pb.pw26s.server.repository.CategoryRepository;
-import br.edu.utfpr.pb.pw26s.server.repository.ProductRepository;
 import br.edu.utfpr.pb.pw26s.server.repository.UserRepository;
 import br.edu.utfpr.pb.pw26s.server.security.AuthenticationResponse;
 import br.edu.utfpr.pb.pw26s.server.service.UserService;
@@ -27,15 +25,13 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @ActiveProfiles("test")
-public class ProductControllerTest {
-    public static final String API_PRODUCTS = "/products";
+public class CategoryControllerTest {
+    public static final String API_CATEGORIES = "/categories";
     private static final String URL_LOGIN = "/login";
 
     @Autowired
     TestRestTemplate testRestTemplate;
 
-    @Autowired
-    ProductRepository productRepository;
     @Autowired
     CategoryRepository categoryRepository;
     @Autowired
@@ -45,49 +41,48 @@ public class ProductControllerTest {
 
     @BeforeEach
     public void cleanup() {
-        productRepository.deleteAll();
-        categoryRepository.deleteAll();
         userRepository.deleteAll();
+        categoryRepository.deleteAll();
         testRestTemplate.getRestTemplate().getInterceptors().clear();
     }
 
     @Test
-    public void postProduct_whenProductIsValidAndUserNotLoggedIn_receiveUnauthorized() {
-        Product product = createValidProduct();
-        ResponseEntity<Object> response = postProduct(product, Object.class);
+    public void postCategory_whenCategoryIsValidAndUserNotLoggedIn_receiveUnauthorized() {
+        Category category = createValidCategory();
+        ResponseEntity<Object> response = postCategory(category, Object.class);
         assertThat(response.getStatusCode()).isEqualTo(HttpStatus.UNAUTHORIZED);
     }
 
     @Test
-    public void postProduct_whenProductIsValidAndUserLoggedIn_receiveOk() {
+    public void postCategory_whenCategoryIsValidAndUserLoggedIn_receiveOk() {
         authenticate();
-        Product product = createValidProduct();
-        ResponseEntity<Object> response = postProduct(product, Object.class);
+        Category category = createValidCategory();
+        ResponseEntity<Object> response = postCategory(category, Object.class);
         assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
     }
 
     @Test
-    public void getProduct_whenProductIdIsProvidedAndUserLoggedIn_receiveCategory() {
+    public void getCategory_whenCategoryIdIsProvidedAndUserLoggedIn_receiveCategory() {
         authenticate();
-        Product product = productRepository.save(createValidProduct());
-        ResponseEntity<List<Product>> list =
-                getAllProducts(new ParameterizedTypeReference<>() {});
-        ResponseEntity<Product> response =
-                getOneProduct(list.getBody().get(0).getId(), Product.class);
-        assertThat(response.getBody().getId()).isEqualTo(product.getId());
+        Category category = categoryRepository.save(createValidCategory());
+        ResponseEntity<List<Category>> categoryList =
+                getAllCategories(new ParameterizedTypeReference<>() {});
+        ResponseEntity<Category> response =
+                getOneCategory(categoryList.getBody().get(0).getId(), Category.class);
+        assertThat(response.getBody().getId()).isEqualTo(category.getId());
     }
 
-    public <T> ResponseEntity<T> postProduct(Object request,  Class<T> responseType) {
-        return testRestTemplate.postForEntity(API_PRODUCTS, request, responseType);
+    public <T> ResponseEntity<T> postCategory(Object request,  Class<T> responseType) {
+        return testRestTemplate.postForEntity(API_CATEGORIES, request, responseType);
     }
 
-    public <T> ResponseEntity<T> getOneProduct(Long id,  Class<T> responseType) {
-        return testRestTemplate.exchange(API_PRODUCTS + "/" + id, HttpMethod.GET,null, responseType);
+    public <T> ResponseEntity<T> getOneCategory(Long id,  Class<T> responseType) {
+        return testRestTemplate.exchange(API_CATEGORIES + "/" + id, HttpMethod.GET,null, responseType);
     }
 
-    public <T> ResponseEntity<T> getAllProducts(ParameterizedTypeReference<T> responseType) {
+    public <T> ResponseEntity<T> getAllCategories(ParameterizedTypeReference<T> responseType) {
         authenticate();
-        return testRestTemplate.exchange(API_PRODUCTS, HttpMethod.GET, null, responseType);
+        return testRestTemplate.exchange(API_CATEGORIES, HttpMethod.GET, null, responseType);
     }
 
     private void authenticate() {
@@ -105,15 +100,6 @@ public class ProductControllerTest {
                 }
             });
         }
-    }
-
-    private Product createValidProduct() {
-        Product product = new Product();
-        product.setName("test-product");
-        product.setDescription("test-product-description");
-        product.setPrice(999.99);
-        product.setCategory(categoryRepository.save(createValidCategory()));
-        return product;
     }
 
     private Category createValidCategory() {

@@ -2,7 +2,10 @@ package br.edu.utfpr.pb.pw26s.server.model;
 
 import br.edu.utfpr.pb.pw26s.server.enums.TypeAccount;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -10,6 +13,9 @@ import javax.validation.constraints.Size;
 
 @Data
 @Entity
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
 public class Account { //extends Audit<User> {
 
     @Id
@@ -34,7 +40,7 @@ public class Account { //extends Audit<User> {
     private TypeAccount type;
 
     @JsonIgnore
-    private Double balance = Double.valueOf(0);
+    private Double balance = 0.0;
 
     @ManyToOne
     @JoinColumn(name = "user_id", referencedColumnName = "id")
