@@ -31,7 +31,6 @@ public class CategoryControllerTest {
 
     @Autowired
     TestRestTemplate testRestTemplate;
-
     @Autowired
     CategoryRepository categoryRepository;
     @Autowired

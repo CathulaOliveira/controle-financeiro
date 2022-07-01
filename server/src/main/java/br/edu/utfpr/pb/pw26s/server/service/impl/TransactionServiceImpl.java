@@ -31,7 +31,7 @@ public class TransactionServiceImpl
         return this.transactionRepository;
     }
 
-    public double calculaEntradasByMonthAndYearAndAccount(FilterBalance filter) {
+    public double calculateEntryByFilterBalance(FilterBalance filter) {
         List<Transaction> listTransactions = new ArrayList<>();
         LocalDate dateStart = LocalDate.of(Integer.parseInt(filter.getYear()), Integer.parseInt(filter.getMonth()), 1);
         LocalDate dateFinish = LocalDate.of(Integer.parseInt(filter.getYear()), Integer.parseInt(filter.getMonth())+1, 1);
@@ -50,7 +50,7 @@ public class TransactionServiceImpl
         return listTransactions.stream().mapToDouble(Transaction::getPrice).sum();
     }
 
-    public double calculaSaidasByMonthAndYearAndAccount(FilterBalance filter) {
+    public double calculateOutputByFilterBalance(FilterBalance filter) {
         List<Transaction> listTransactions = new ArrayList<>();
         LocalDate dateStart = LocalDate.of(Integer.parseInt(filter.getYear()), Integer.parseInt(filter.getMonth()), 1);
         LocalDate dateFinish = LocalDate.of(Integer.parseInt(filter.getYear()), Integer.parseInt(filter.getMonth())+1, 1);
@@ -69,7 +69,7 @@ public class TransactionServiceImpl
         return listTransactions.stream().mapToDouble(Transaction::getPrice).sum();
     }
 
-    public List<Transaction> transactionsByMonthAndYearAndAccount(FilterBalance filter) {
+    public List<Transaction> listTransactionsByFilterBalance(FilterBalance filter) {
         LocalDate dateStart = LocalDate.of(Integer.parseInt(filter.getYear()), Integer.parseInt(filter.getMonth()), 1);
         LocalDate dateFinish = LocalDate.of(Integer.parseInt(filter.getYear()), Integer.parseInt(filter.getMonth())+1, 1);
         List<Transaction> listTransactions = new ArrayList<>();

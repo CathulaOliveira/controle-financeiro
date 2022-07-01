@@ -30,4 +30,8 @@ public class UserService {
         return userRepository.findByUsername(userName);
     }
 
+    public void deleteAll() {
+        userRepository.deleteAll();
+    }
+
 }

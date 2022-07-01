@@ -69,11 +69,11 @@ public class BalanceService {
     }
 
     private void somaSaldoConta(Transaction transaction, Account account) {
-        account.setBalance(account.getBalance() + transaction.getPrice());
+        account.setBalance((account.getBalance()!=null ? account.getBalance() : 0) + transaction.getPrice());
     }
 
     private void subtraiSaldoConta(Transaction transaction, Account account) {
-        account.setBalance(account.getBalance() - transaction.getPrice());
+        account.setBalance((account.getBalance()!=null ? account.getBalance() : 0) - transaction.getPrice());
     }
 
 }

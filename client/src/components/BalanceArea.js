@@ -44,7 +44,7 @@ export const BalanceArea = (props) => {
     return (
         <div>
             <div className='container' style={containerStyle}>
-                <div className='container-padding container-flex-2'>
+                <div className='container-padding container-flex-4'>
                     <label>Conta</label>
                     <br></br>
                     <select

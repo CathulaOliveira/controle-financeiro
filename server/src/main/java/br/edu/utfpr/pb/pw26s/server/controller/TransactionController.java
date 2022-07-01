@@ -23,17 +23,17 @@ public class TransactionController extends CrudController<Transaction, Long> {
 
     @PostMapping("calcular-total-entradas")
     public Double calcularTotalEntradas(@RequestBody FilterBalance filter) {
-        return this.transactionService.calculaEntradasByMonthAndYearAndAccount(filter);
+        return this.transactionService.calculateEntryByFilterBalance(filter);
     }
 
     @PostMapping("calcular-total-saidas")
     public Double calcularTotalSaidas(@RequestBody FilterBalance filter) {
-        return this.transactionService.calculaSaidasByMonthAndYearAndAccount(filter);
+        return this.transactionService.calculateOutputByFilterBalance(filter);
     }
 
     @PostMapping("find-by-account")
     public List<Transaction> findByAccount(@RequestBody FilterBalance filter) {
-        return this.transactionService.transactionsByMonthAndYearAndAccount(filter);
+        return this.transactionService.listTransactionsByFilterBalance(filter);
     }
 
     @GetMapping("find-by-user-logged")

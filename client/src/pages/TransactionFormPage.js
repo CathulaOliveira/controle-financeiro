@@ -46,7 +46,7 @@ export const TransactionFormPage = () => {
         }).catch((erro) => {
             setApiError('Falha ao carregar a combo de categorias.');
         });
-        AccountService.findAll().then((response) => {
+        AccountService.findByUserLogged().then((response) => {
             setAccounts(response.data);
             setApiError();
         }).catch((erro) => {

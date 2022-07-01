@@ -5,16 +5,13 @@ import br.edu.utfpr.pb.pw26s.server.model.User;
 import br.edu.utfpr.pb.pw26s.server.repository.UserRepository;
 import br.edu.utfpr.pb.pw26s.server.shared.GenericResponse;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.MethodOrderer;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.TestMethodOrder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.ActiveProfiles;
-import org.springframework.web.client.RestTemplate;
 
 import java.util.List;
 import java.util.Map;
