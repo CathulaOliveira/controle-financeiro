@@ -6,6 +6,7 @@ import br.edu.utfpr.pb.pw26s.server.repository.CategoryRepository;
 import br.edu.utfpr.pb.pw26s.server.repository.UserRepository;
 import br.edu.utfpr.pb.pw26s.server.security.AuthenticationResponse;
 import br.edu.utfpr.pb.pw26s.server.service.UserService;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,6 +39,7 @@ public class CategoryControllerTest {
     @Autowired
     UserService userService;
 
+    @AfterEach
     @BeforeEach
     public void cleanup() {
         userRepository.deleteAll();

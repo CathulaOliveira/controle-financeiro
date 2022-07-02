@@ -6,6 +6,7 @@ import br.edu.utfpr.pb.pw26s.server.security.AuthenticationResponse;
 import br.edu.utfpr.pb.pw26s.server.security.SecurityConstants;
 import br.edu.utfpr.pb.pw26s.server.security.UserDTO;
 import br.edu.utfpr.pb.pw26s.server.service.UserService;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,6 +32,7 @@ public class LoginControllerTest {
     @Autowired
     UserService userService;
 
+    @AfterEach
     @BeforeEach
     public void cleanup() {
         userRepository.deleteAll();

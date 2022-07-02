@@ -4,6 +4,7 @@ import br.edu.utfpr.pb.pw26s.server.error.ApiError;
 import br.edu.utfpr.pb.pw26s.server.model.User;
 import br.edu.utfpr.pb.pw26s.server.repository.UserRepository;
 import br.edu.utfpr.pb.pw26s.server.shared.GenericResponse;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,6 +31,7 @@ public class UserControllerTest {
     @Autowired
     UserRepository userRepository;
 
+    @AfterEach
     @BeforeEach
     public void cleanup() {
         userRepository.deleteAll();

@@ -1,6 +1,8 @@
 package br.edu.utfpr.pb.pw26s.server.repository;
 
 import br.edu.utfpr.pb.pw26s.server.model.User;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
@@ -17,6 +19,12 @@ public class UserRepositoryTest {
     TestEntityManager testEntityManager;
     @Autowired
     UserRepository userRepository;
+
+    @AfterEach
+    @BeforeEach
+    public void cleanup() {
+        userRepository.deleteAll();
+    }
 
     @Test
     public void findByUsername_whenUserExists_returnsUser() {

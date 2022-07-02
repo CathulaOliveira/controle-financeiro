@@ -2,6 +2,8 @@ package br.edu.utfpr.pb.pw26s.server.service;
 
 import br.edu.utfpr.pb.pw26s.server.model.Category;
 import br.edu.utfpr.pb.pw26s.server.service.impl.CategoryServiceImpl;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -17,6 +19,12 @@ public class CategoryServiceImplTest {
 
     @Autowired
     CategoryServiceImpl underTest;
+
+    @AfterEach
+    @BeforeEach
+    public void cleanup() {
+        underTest.deleteAll();
+    }
 
     @Test
     void saveCategory() {

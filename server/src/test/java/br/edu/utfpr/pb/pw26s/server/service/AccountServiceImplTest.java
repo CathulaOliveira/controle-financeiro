@@ -4,6 +4,7 @@ import br.edu.utfpr.pb.pw26s.server.enums.TypeAccount;
 import br.edu.utfpr.pb.pw26s.server.model.Account;
 import br.edu.utfpr.pb.pw26s.server.model.User;
 import br.edu.utfpr.pb.pw26s.server.service.impl.AccountServiceImpl;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,6 +28,7 @@ public class AccountServiceImplTest {
     @Autowired
     UserService userService;
 
+    @AfterEach
     @BeforeEach
     public void cleanup() {
         underTest.deleteAll();

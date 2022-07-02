@@ -6,6 +6,7 @@ import br.edu.utfpr.pb.pw26s.server.model.Account;
 import br.edu.utfpr.pb.pw26s.server.model.Category;
 import br.edu.utfpr.pb.pw26s.server.model.Transaction;
 import br.edu.utfpr.pb.pw26s.server.model.User;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,6 +34,7 @@ public class BalanceServiceTest {
     @Autowired
     CategoryService categoryService;
 
+    @AfterEach
     @BeforeEach
     public void cleanup() {
         transactionService.deleteAll();
